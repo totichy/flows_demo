@@ -1,10 +1,10 @@
 import React from 'react';
 import { useCallback, useState } from 'react';
 
-import ReactFlow, { MiniMap, Controls, applyEdgeChanges, applyNodeChanges } from 'react-flow-renderer';
+import ReactFlow, { MiniMap, Controls, applyEdgeChanges, applyNodeChanges, Background } from 'react-flow-renderer';
 
 
-function Flow({ onConnect, initialNodes, initialEdges }) {
+function Flow({ onConnect, initialNodes, initialEdges, handleShow }) {
     const [nodes, setNodes] = useState(initialNodes);
     const [edges, setEdges] = useState(initialEdges);
 
@@ -38,10 +38,12 @@ function Flow({ onConnect, initialNodes, initialEdges }) {
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
+                onNodeClick={handleShow}
                 fitView
             >
                 {/* <MiniMap /> */}
                 <Controls />
+                <Background style={{ background: "#777494" }} />
             </ReactFlow>
         </>
     );

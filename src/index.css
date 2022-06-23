@@ -9,3 +9,9 @@ main .node-flows {
   height: "80vh";
 }
 
+.node {
+  background: "#262442";
+  color: "#fff";
+  box-shadow: "3px 3px 7px #000" 
+}
+
