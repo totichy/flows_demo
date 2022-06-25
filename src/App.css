@@ -1,5 +1,9 @@
-.node {
-  background: "#262442";
-  color: "#fff";
-  box-shadow: "3px 3px 7px #000" 
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  background-color: #454545;
 }

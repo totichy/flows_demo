@@ -1,11 +1,20 @@
 import React from 'react';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useContext } from 'react';
+import { NodeContext } from './Contexts/NodeContext.js';
 
 import ReactFlow, { MiniMap, Controls, applyEdgeChanges, applyNodeChanges, Background } from 'react-flow-renderer';
 
+import { CustomEdge } from './ButtonEdge.js';
 
-function Flow({ onConnect, initialNodes, initialEdges, handleShow }) {
-    const [nodes, setNodes] = useState(initialNodes);
+const edgeTypes = {
+    buttonedge: CustomEdge,
+};
+
+
+function Flow({ onConnect, initialEdges, handleShow }) {
+
+    const { nodes, setNodes } = useContext(NodeContext);
+
     const [edges, setEdges] = useState(initialEdges);
 
     const onNodesChange = useCallback(
@@ -17,21 +26,19 @@ function Flow({ onConnect, initialNodes, initialEdges, handleShow }) {
         [setEdges]
     );
 
-    const addNode = () => {
-
-
+    const dateNode = () => {
         setNodes(prev => [...prev, {
             id: (nodes.length + 1).toString(),
-            data: { label: 'new node' },
+            data: {
+                label: `Node ${nodes.length + 1}`
+            },
             position: { x: nodes[nodes.length - 1].position.x + 200, y: 0 },
         }]);
-        console.log(nodes);
     };
-
 
     return (
         <>
-            <button onClick={addNode}>add Node</button>
+            <button onClick={dateNode}>Node</button>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -39,6 +46,7 @@ function Flow({ onConnect, initialNodes, initialEdges, handleShow }) {
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
                 onNodeClick={handleShow}
+                edgeTypes={edgeTypes}
                 fitView
             >
                 {/* <MiniMap /> */}
