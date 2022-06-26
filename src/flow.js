@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCallback, useState, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { NodeContext } from './Contexts/NodeContext.js';
 
 import ReactFlow, { MiniMap, Controls, applyEdgeChanges, applyNodeChanges, Background } from 'react-flow-renderer';
@@ -11,11 +11,11 @@ const edgeTypes = {
 };
 
 
-function Flow({ onConnect, initialEdges, handleShow }) {
+function Flow({ onConnect, handleShow }) {
 
     const { nodes, setNodes } = useContext(NodeContext);
 
-    const [edges, setEdges] = useState(initialEdges);
+    const { edges, setEdges } = useContext(NodeContext);
 
     const onNodesChange = useCallback(
         (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),

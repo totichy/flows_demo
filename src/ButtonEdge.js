@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { getBezierPath, getEdgeCenter, getMarkerEnd } from 'react-flow-renderer';
 import { NodeContext } from './Contexts/NodeContext.js';
 
 import './index.css';
+
+import ModalEdges from './Components/ModalEdges';
 
 export const CustomEdge = ({
     id,
@@ -33,15 +35,12 @@ export const CustomEdge = ({
 
     const foreignObjectSize = 40;
 
-    const onEdgeClick = (evt, id) => {
-        evt.stopPropagation();
+    const [show, setShow] = useState(false);
 
-        console.log(nodes);
-        alert(`remove ${id}`);
-    };
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-
-    const { nodes, setNodes } = useContext(NodeContext);
+    const { addNode } = useContext(NodeContext);
 
     return (
         <>
@@ -61,11 +60,12 @@ export const CustomEdge = ({
                 requiredExtensions="http://www.w3.org/1999/xhtml"
             >
                 <section>
-                    <button className="edgebutton" onClick={(event) => onEdgeClick(event, id)}>
+                    <button className="edgebutton" onClick={(evt) => { handleShow(); addNode(evt, id); }}>
                         +
                     </button>
                 </section>
             </foreignObject>
+            <ModalEdges show={show} handleClose={handleClose} />
         </>
     );
 };

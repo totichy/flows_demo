@@ -4,9 +4,7 @@ import React, { useState } from 'react';
 import NodeContextProvider from './Contexts/NodeContext';
 
 import Flow from './Flow';
-import ModalNodes from './Components/Modal';
-
-import initialEdges from './Data/edges.js';
+import ModalEdges from './Components/ModalEdges';
 
 
 function App() {
@@ -21,10 +19,10 @@ function App() {
       <NodeContextProvider>
         <main style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
           <div id="node-flows" style={{ width: "95%", height: "50vh", border: "0.5px solid black" }}>
-            <Flow handleShow={handleShow} initialEdges={initialEdges} />
+            <Flow handleShow={handleShow} />
           </div>
         </main>
-        <ModalNodes show={show} handleClose={handleClose} />
+        <ModalEdges show={show} handleClose={handleClose} />
       </NodeContextProvider>
     </>
 
