@@ -11,14 +11,16 @@ import { useEffect } from 'react';
 
 const ModalNodes = ({ node, show, handleClose }) => {
 
-    const { nodes, deleteNode } = useContext(NodeContext);
+    const { deleteNode } = useContext(NodeContext);
 
 
-    const [updatedNode, setUpdatedNode] = useState();
+    const [updatedNode, setUpdatedNode] = useState({});
 
     useEffect(() => {
         setUpdatedNode(node);
     }, [node]);
+
+    console.log(updatedNode);
 
     const handleUpdateNode = (e) => {
         e.preventDefault();
@@ -39,7 +41,7 @@ const ModalNodes = ({ node, show, handleClose }) => {
                         <Form.Control
                             type='text'
                             id='name'
-                            value={updatedNode?.data?.label}
+                            value={updatedNode === undefined ? updatedNode.data.label : ""}
                             placeholder='Název'
                             onChange={handleUpdateNode}
                             required
