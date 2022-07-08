@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { NodeContext } from '../Contexts/NodeContext.js';
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -7,7 +8,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 
-const ModalNodes = ({ show, handleClose }) => {
+const ModalNodes = ({ nodeId, show, handleClose }) => {
+
+    const { nodes, deleteNode } = useContext(NodeContext);
+
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -23,22 +27,6 @@ const ModalNodes = ({ show, handleClose }) => {
                             autoFocus
                         />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="">
-                        <Form.Label>Node date</Form.Label>
-                        <Form.Control
-                            type="date"
-                            placeholder=""
-                            autoFocus
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="">
-                        <Form.Label>Node number</Form.Label>
-                        <Form.Control
-                            type="number"
-                            placeholder=""
-                            autoFocus
-                        />
-                    </Form.Group>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
@@ -46,7 +34,7 @@ const ModalNodes = ({ show, handleClose }) => {
                 <Container>
                     <Row>
                         <Col >
-                            <Button variant="danger" onClick={handleClose}>
+                            <Button variant="danger" onClick={() => { deleteNode(nodeId); handleClose(); }}>
                                 Delete Node
                             </Button>
                         </Col>

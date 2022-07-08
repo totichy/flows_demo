@@ -5,7 +5,7 @@ import Node from './Node';
 
 import Modal from 'react-bootstrap/Modal';
 
-const ModalEdges = ({ show, handleClose }) => {
+const ModalEdges = ({ show, handleClose, edgeId }) => {
 
     const { apiNodes } = useContext(NodeContext);
 
@@ -16,7 +16,7 @@ const ModalEdges = ({ show, handleClose }) => {
             </Modal.Header>
             <Modal.Body>
                 {apiNodes.map((node) => {
-                    return (<Node key={node.id} {...node} />);
+                    return <Node key={node.id} {...node} edgeId={edgeId} handleClose={handleClose} />;
                 })}
             </Modal.Body>
         </Modal>

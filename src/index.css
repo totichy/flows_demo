@@ -43,7 +43,7 @@ section {
   min-height: 40px;
 }
 
-.apiNode {
+.api-node {
   z-index: 0; 
   transform: translate(0px, 0px); 
   pointer-events: all; 
@@ -52,5 +52,5 @@ section {
   color: rgb(255, 255, 255) !important; 
   box-shadow: rgb(0, 0, 0) 3px 3px 7px;
   margin-bottom: 1rem;
-  min-width: 8rem;
+  min-width: 10rem;
 }

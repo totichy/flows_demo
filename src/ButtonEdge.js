@@ -40,7 +40,7 @@ export const CustomEdge = ({
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const { addNode } = useContext(NodeContext);
+    const [edgeId, setEdgeId] = useState("");
 
     return (
         <>
@@ -60,12 +60,12 @@ export const CustomEdge = ({
                 requiredExtensions="http://www.w3.org/1999/xhtml"
             >
                 <section>
-                    <button className="edgebutton" onClick={(evt) => { handleShow(); addNode(evt, id); }}>
+                    <button className="edgebutton" onClick={() => { setEdgeId(id); handleShow(); }}>
                         +
                     </button>
                 </section>
             </foreignObject>
-            <ModalEdges show={show} handleClose={handleClose} />
+            <ModalEdges edgeId={edgeId} show={show} handleClose={handleClose} />
         </>
     );
 };
