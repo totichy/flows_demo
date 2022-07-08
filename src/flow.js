@@ -16,11 +16,14 @@ function Flow({ onConnect }) {
     const { edges, setEdges } = useContext(NodeContext);
     const { nodes, setNodes } = useContext(NodeContext);
 
-    const [nodeId, setNodeId] = useState(null);
+    const [node, setNode] = useState({});
 
-    const getNodeId = (e) => {
-        setNodeId(e.target.getAttribute("data-id"));
+    const getNode = (e) => {
+        let findNode = nodes.filter(node => node.id === e.target.getAttribute("data-id"));
+        setNode(findNode[0]);
+        handleShow();
     };
+
 
     const onEdgesChange = useCallback(
         (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
@@ -45,7 +48,7 @@ function Flow({ onConnect }) {
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
-                onNodeClick={(e) => { getNodeId(e); handleShow(); }}
+                onNodeClick={e => getNode(e)}
                 edgeTypes={edgeTypes}
                 fitView
             >
@@ -53,7 +56,7 @@ function Flow({ onConnect }) {
                 <Controls />
                 <Background style={{ background: "#777494" }} />
             </ReactFlow>
-            <ModalNodes show={show} handleClose={handleClose} nodeId={nodeId} />
+            <ModalNodes show={show} handleClose={handleClose} node={node} />
         </>
     );
 };

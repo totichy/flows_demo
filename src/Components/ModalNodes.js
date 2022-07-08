@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { NodeContext } from '../Contexts/NodeContext.js';
 
 import Modal from 'react-bootstrap/Modal';
@@ -7,10 +7,25 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import { useEffect } from 'react';
 
-const ModalNodes = ({ nodeId, show, handleClose }) => {
+const ModalNodes = ({ node, show, handleClose }) => {
 
     const { nodes, deleteNode } = useContext(NodeContext);
+
+
+    const [updatedNode, setUpdatedNode] = useState();
+
+    useEffect(() => {
+        setUpdatedNode(node);
+    }, [node]);
+
+    const handleUpdateNode = (e) => {
+        e.preventDefault();
+        setUpdatedNode((prev) => ({ ...prev, data: { ...node.data, label: e.target.value } }));
+        console.log(updatedNode.data.label);
+    };
+
 
     return (
         <Modal show={show} onHide={handleClose}>
@@ -19,12 +34,15 @@ const ModalNodes = ({ nodeId, show, handleClose }) => {
             </Modal.Header>
             <Modal.Body>
                 <Form>
-                    <Form.Group className="mb-3" controlId="">
-                        <Form.Label>Node name</Form.Label>
+                    <Form.Group className="mb-3" >
+                        <Form.Label>Zadejte název uzlu: </Form.Label>
                         <Form.Control
-                            type="text"
-                            placeholder=""
-                            autoFocus
+                            type='text'
+                            id='name'
+                            value={updatedNode?.data?.label}
+                            placeholder='Název'
+                            onChange={handleUpdateNode}
+                            required
                         />
                     </Form.Group>
                 </Form>
@@ -34,7 +52,7 @@ const ModalNodes = ({ nodeId, show, handleClose }) => {
                 <Container>
                     <Row>
                         <Col >
-                            <Button variant="danger" onClick={() => { deleteNode(nodeId); handleClose(); }}>
+                            <Button variant="danger" onClick={() => { deleteNode(updatedNode.id); handleClose(); }}>
                                 Delete Node
                             </Button>
                         </Col>

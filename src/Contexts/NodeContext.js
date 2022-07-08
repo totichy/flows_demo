@@ -43,6 +43,7 @@ const NodeContextProvider = (props) => {
     };
 
     const deleteNode = (nodeId) => {
+
         nodes.sort((a, b) => a.id - b.id);
 
         const arrayNodesLeft = nodes.slice(0, nodeId - 1);
