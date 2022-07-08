@@ -4,6 +4,8 @@ import initialNodes from '../Data/nodes.js';
 import initialEdges from '../Data/edges.js';
 import initialApiNodes from '../Data/apiNodes.js';
 
+import getNodesMatrix from "../Helpers/getNodesMatrix.js";
+
 
 
 export const NodeContext = createContext();
@@ -33,24 +35,11 @@ const NodeContextProvider = (props) => {
             { ...node, id: (index + 1).toString() }
         ));
 
-        if (allNodes.length > 5) {
-            //const arrayNodesLeft = nodes.slice(0, 5);
-            allNodes[5].position.x = 0;
-            allNodes[5].position.y = 120;
-            // let modifiedNodesRight = arrayNodesRight.map(node => (
-            //     { ...node, position: { ...node.position, y: -50 } }
-            // ));
-            // allNodes = [...arrayNodesLeft, ...modifiedNodesRight];
-        }
-
-        if (allNodes.length > 10) {
-            allNodes[10].position.x = 0;
-            allNodes[10].position.y = 240;
-        }
+        const finalNodes = getNodesMatrix(allNodes, 5);
 
         setEdges(prev => [...prev, { id: `e${nodes.length}-${nodes.length + 1}`, source: `${nodes.length}`, target: `${nodes.length + 1}`, animated: true, type: 'buttonedge' }]);
 
-        setNodes(allNodes);
+        setNodes(finalNodes);
     };
 
     const deleteNode = (nodeId) => {
@@ -59,29 +48,9 @@ const NodeContextProvider = (props) => {
         const arrayNodesLeft = nodes.slice(0, nodeId - 1);
         const arrayNodesRight = nodes.slice(nodeId);
 
-        let allNodes = [...arrayNodesLeft, ...arrayNodesRight].map((node, index) => (
+        const allNodes = [...arrayNodesLeft, ...arrayNodesRight].map((node, index) => (
             { ...node, id: (index + 1).toString() }
         ));
-
-        const getNodesMatrix = (arr, size) => {
-
-            const temporaryNodesMatrix = [];
-            for (let i = 0; i < temporaryNodesMatrix.length; i += size) {
-                temporaryNodesMatrix.push(arr.slice(i, i + size));
-            }
-
-            const finalNodesMatrix = [];
-
-            for (let i = 0; i < temporaryNodesMatrix.length; i++) {
-                for (let j = 0; j < temporaryNodesMatrix[i].length; j++) {
-                    if (temporaryNodesMatrix[i][j] === undefined) continue;
-                    temporaryNodesMatrix[i][j].position.x = j * 200;
-                    temporaryNodesMatrix[i][j].position.y = i * 120;
-
-                    finalNodesMatrix.push(temporaryNodesMatrix[i][j]);
-                }
-            }
-        };
 
         const finalNodes = getNodesMatrix(allNodes, 5);
 
@@ -89,7 +58,6 @@ const NodeContextProvider = (props) => {
 
         const arrayEdgesLeft = edges.slice(0, deleteEdgeIndex);
         const arrayEdgesRight = edges.slice(deleteEdgeIndex + 1);
-
 
         if (arrayEdgesRight.length > 0) {
             let modifiedEdgesRight = arrayEdgesRight.map(edge => {
@@ -105,9 +73,6 @@ const NodeContextProvider = (props) => {
         setNodes(finalNodes);
 
     };
-
-
-
 
     return (
         <NodeContext.Provider
