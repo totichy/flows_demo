@@ -16,7 +16,7 @@ function Flow({ onConnect }) {
     const { edges, setEdges } = useContext(NodeContext);
     const { nodes, setNodes } = useContext(NodeContext);
 
-    const [node, setNode] = useState({});
+    const [node, setNode] = useState(null);
 
     const getNode = (e) => {
         let findNode = nodes.filter(node => node.id === e.target.getAttribute("data-id"));
@@ -56,7 +56,7 @@ function Flow({ onConnect }) {
                 <Controls />
                 <Background style={{ background: "#777494" }} />
             </ReactFlow>
-            <ModalNodes show={show} handleClose={handleClose} node={node} />
+            {node && <ModalNodes show={show} handleClose={handleClose} node={node} setNode={setNode} />}
         </>
     );
 };

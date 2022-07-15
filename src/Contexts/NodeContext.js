@@ -42,6 +42,23 @@ const NodeContextProvider = (props) => {
         setNodes(finalNodes);
     };
 
+
+
+    const updateNode = (updatedNode) => {
+        console.log(updatedNode);
+
+        const newArr = nodes.map(node => {
+            if (node.id === updatedNode.id) {
+                return updatedNode;
+            }
+            return node;
+        });
+        setNodes(newArr);
+    };
+
+    console.log(nodes);
+
+
     const deleteNode = (nodeId) => {
 
         nodes.sort((a, b) => a.id - b.id);
@@ -77,7 +94,7 @@ const NodeContextProvider = (props) => {
 
     return (
         <NodeContext.Provider
-            value={{ edges, setEdges, nodes, setNodes, apiNodes, setApiNodes, addNode, deleteNode }}
+            value={{ edges, setEdges, nodes, setNodes, apiNodes, setApiNodes, addNode, updateNode, deleteNode }}
         >
             {props.children}
         </NodeContext.Provider>
